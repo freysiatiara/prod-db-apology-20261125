@@ -32,6 +32,12 @@ def main():
     with open(path, "w", encoding="utf-8", newline="\n") as handle:
         handle.write(LINE + "\n")
     os.chmod(path, 0o644)
+    with open(path, "rb") as handle:
+        written = handle.read()
+    expected = (LINE + "\n").encode("utf-8")
+    if written != expected or not 1 <= len(LINE) <= 200:
+        print("error: entry output failed verification", file=sys.stderr)
+        return 1
     return 0
 
 
